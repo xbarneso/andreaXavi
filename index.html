@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea & Xavi - Invitación de Boda</title>
+    <link rel="stylesheet" href="styles.css?v=3">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sobre de Invitación (Video) -->
+    <div class="envelope-overlay" id="envelopeOverlay">
+        <video 
+            class="envelope-video" 
+            id="envelopeVideo" 
+            preload="auto" 
+            muted 
+            playsinline 
+            webkit-playsinline>
+            <source src="Descargas/sobre.mp4" type="video/mp4">
+        </video>
+        <div class="envelope-tap-hint" id="envelopeTapHint">
+            <span>Toca para abrir</span>
+        </div>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">Andrea & Xavi</div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#informacion" class="nav-link">Información</a></li>
+                <li><a href="#formulario" class="nav-link">Formulario de asistencia</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección Home con Imagen -->
+    <section id="home" class="hero-section">
+        <div class="hero-image-container">
+            <img src="Descargas/fondoprincipal.JPG" alt="Andrea y Xavi" class="hero-main-image">
+            <div class="hero-content">
+                <h1 class="hero-title">Andrea y Xavi</h1>
+                <p class="hero-subtitle">¡Nos casamos!</p>
+                <p class="hero-date-main">01 / 08 / 2026</p>
+            </div>
+        </div>
+        <p class="hero-quote">Lo mejor de la felicidad es cuando la compartes con las personas que hacen que la vida merezca la pena</p>
+    </section>
+
+    <!-- Sección Información -->
+    <section id="informacion" class="info-section">
+        <div class="container">
+            <div class="countdown-container">
+                <div id="countdown" class="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">000</span>
+                        <span class="countdown-label">Días</span>
+                    </div>
+                    <span class="countdown-separator">:</span>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <span class="countdown-separator">:</span>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Mins</span>
+                    </div>
+                    <span class="countdown-separator">:</span>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Segs</span>
+                    </div>
+                </div>
+            </div>
+            <div class="location-info">
+                <h3 class="location-name">Can Ollé de la Guàrdia</h3>
+                <p class="location-address">08294 - El Bruc, Barcelona</p>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2983.4489586869455!2d1.72184!3d41.6316664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a45c5274422763%3A0xe29a391956d0d787!2sCan%20Oll%C3%A9%20de%20la%20Gu%C3%A0rdia!5e0!3m2!1ses!2ses!4v1704118400000!5m2!1ses!2ses" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="google-map">
+                </iframe>
+            </div>
+            <div class="timeline-container">
+                <img src="Descargas/infoboda.jpg?v=2" alt="Timeline de la boda" class="timeline-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulario de Asistencia -->
+    <section id="formulario" class="form-section">
+        <div class="container">
+            <h2 class="section-title">Confirmación de Asistencia</h2>
+            <p class="section-subtitle">Por favor, confirma tu asistencia antes del 29 de marzo de 2026.</p>
+            <form class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo *</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="asistencia">¿Asistirás? *</label>
+                    <select id="asistencia" name="asistencia" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="si">Sí, asistiré con mucho gusto</option>
+                        <option value="no">No podré asistir</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="acompanantes">Número de acompañantes *</label>
+                    <input type="number" id="acompanantes" name="acompanantes" min="0" value="0" required>
+                    <small class="form-help">Si indicas más de 1 acompañante, se mostrarán los campos para cada uno</small>
+                </div>
+                <div class="form-group">
+                    <label for="restriccion">¿Tienes alguna restricción alimentaria?</label>
+                    <input type="text" id="restriccion" name="restriccion" placeholder="Ej: Vegetariano, sin gluten, alergias...">
+                </div>
+                <div class="form-group">
+                    <label for="plato-principal">Preferencia de plato principal *</label>
+                    <select id="plato-principal" name="plato-principal" required>
+                        <option value="">Selecciona una opción</option>
+                        <option value="pescado">Pescado</option>
+                        <option value="carne">Carne</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>¿Necesitarás autobús? *</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="autobus" value="si" required>
+                            <span>Sí</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="autobus" value="no" required>
+                            <span>No</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Contenedor para campos de acompañantes (se genera dinámicamente) -->
+                <div id="acompanantesContainer"></div>
+                
+                <div class="form-group">
+                    <label for="mensaje">Déjanos un mensaje para los novios (opcional)</label>
+                    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe un mensaje especial..."></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Enviar Confirmación</button>
+            </form>
+            <div id="formMessage" class="form-message"></div>
+            
+            <div class="recomendaciones">
+                <h3 class="recomendaciones-title">Recomendaciones</h3>
+                <ol class="recomendaciones-list">
+                    <li>Se recomienda llegar con tiempo suficiente, ya que el acceso a la masía es por un camino no asfaltado.</li>
+                    <li>Utiliza Google Maps y no Waze para llegar a la masía.</li>
+                    <li>Ven con ganas de celebrar, reír y vivir un día inolvidable, de lo demás nos encargamos nosotros.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Contacto -->
+    <section id="contacto" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <p class="section-subtitle">Si tienes alguna pregunta, no dudes en contactarnos</p>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">💌</div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:xbarnesortega@gmail.com">xbarnesortega@gmail.com</a></p>
+                    <p><a href="mailto:andreamencer@gmail.com">andreamencer@gmail.com</a></p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>Teléfono</h3>
+                    <p><a href="tel:+34697889039">697 88 90 39</a></p>
+                    <p><a href="tel:+34698542294">698 54 22 94</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Video -->
+    <section id="video" class="video-section">
+        <div class="video-container-full">
+            <video autoplay muted loop playsinline class="footer-video">
+                <source src="Descargas/boda.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            </video>
+            <div class="video-overlay-footer"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Andrea & Xavi. Hecho con ❤️ para nuestro gran día.</p>
+        </div>
+    </footer>
+
+    <script src="script.js?v=3"></script>
+    <script>
+    (function() {
+        var weddingDate = new Date('2026-08-01T00:00:00');
+        
+        function update() {
+            var now = new Date();
+            var diff = weddingDate.getTime() - now.getTime();
+            
+            if (diff > 0) {
+                var d = Math.floor(diff / 86400000);
+                var h = Math.floor((diff % 86400000) / 3600000);
+                var m = Math.floor((diff % 3600000) / 60000);
+                var s = Math.floor((diff % 60000) / 1000);
+                
+                var dEl = document.getElementById('days');
+                var hEl = document.getElementById('hours');
+                var mEl = document.getElementById('minutes');
+                var sEl = document.getElementById('seconds');
+                
+                if (dEl) dEl.textContent = (d < 100 ? (d < 10 ? '00' + d : '0' + d) : d);
+                if (hEl) hEl.textContent = (h < 10 ? '0' + h : h);
+                if (mEl) mEl.textContent = (m < 10 ? '0' + m : m);
+                if (sEl) sEl.textContent = (s < 10 ? '0' + s : s);
+            }
+            
+            requestAnimationFrame(update);
+        }
+        
+        requestAnimationFrame(update);
+    })();
+    </script>
+</body>
+</html>
+

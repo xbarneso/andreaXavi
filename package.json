@@ -1,0 +1,16 @@
+{
+  "name": "boda-andra-xavi",
+  "version": "1.0.0",
+  "description": "Sitio web de invitación de boda para Andrea y Xavi",
+  "scripts": {
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "boda",
+    "wedding",
+    "invitacion"
+  ],
+  "author": "Andrea & Xavi",
+  "license": "MIT"
+}
+
