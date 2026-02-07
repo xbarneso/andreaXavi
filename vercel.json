@@ -16,7 +16,7 @@
       ]
     },
     {
-      "source": "/Descargas/(.*\\.(jpg|jpeg|png|gif|webp))",
+      "source": "/Descargas/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -35,4 +35,3 @@
     }
   ]
 }
-
