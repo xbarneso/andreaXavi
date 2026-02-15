@@ -3,67 +3,117 @@
 // ========================================
 
 (function() {
-    const overlay = document.getElementById('envelopeOverlay');
-    const video = document.getElementById('envelopeVideo');
-    const hint = document.getElementById('envelopeTapHint');
+    // Verificar SIEMPRE primero si ya se abrió (antes de que el DOM cargue)
+    const envelopeOpened = localStorage.getItem('envelopeOpened');
     
-    if (!overlay || !video) return;
-    
-    // Verificar si ya se abrió antes (en esta sesión)
-    if (sessionStorage.getItem('envelopeOpened')) {
-        overlay.classList.add('hidden');
-        document.body.style.overflow = '';
-        return;
-    }
-    
-    // Bloquear scroll mientras el sobre está visible
-    document.body.style.overflow = 'hidden';
-    
-    let isPlaying = false;
-    
-    function playEnvelope() {
-        if (isPlaying) return;
-        isPlaying = true;
+    // Función para inicializar el sobre
+    function initEnvelope() {
+        const overlay = document.getElementById('envelopeOverlay');
+        const video = document.getElementById('envelopeVideo');
+        const hint = document.getElementById('envelopeTapHint');
         
-        // Ocultar el texto de ayuda
-        if (hint) hint.classList.add('hide');
+        if (!overlay || !video) return;
         
-        // Reproducir el video
-        video.play().catch(function() {
+        // Si ya se abrió antes, ocultar inmediatamente
+        if (envelopeOpened === 'true') {
+            overlay.style.display = 'none';
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            return;
+        }
+        
+        // Bloquear scroll mientras el sobre está visible
+        document.body.style.overflow = 'hidden';
+        
+        let isPlaying = false;
+        
+        function playEnvelope() {
+            if (isPlaying) return;
+            isPlaying = true;
+            
+            // Ocultar el texto de ayuda
+            if (hint) hint.classList.add('hide');
+            
+            // Reproducir el video
+            const playPromise = video.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(function() {
+                        // Video se está reproduciendo
+                    })
+                    .catch(function(error) {
+                        // Si falla la reproducción (por ejemplo, en móvil sin interacción), cerrar directamente
+                        console.log('Error al reproducir video:', error);
+                        closeOverlay();
+                    });
+            }
+        }
+        
+        function closeOverlay() {
+            // Guardar inmediatamente que se abrió
+            localStorage.setItem('envelopeOpened', 'true');
+            
+            // Añadir clase de revelado espectacular
+            overlay.classList.add('reveal');
+            
+            setTimeout(function() {
+                overlay.style.display = 'none';
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 400);
+        }
+        
+        // Cuando el video termina, cerrar
+        video.addEventListener('ended', function() {
             closeOverlay();
+        });
+        
+        // También cerrar si el video se pausa después de haber empezado (fallback)
+        video.addEventListener('pause', function() {
+            if (isPlaying && video.currentTime > 0.5) {
+                closeOverlay();
+            }
+        });
+        
+        // Click/touch en cualquier parte del overlay para reproducir
+        overlay.addEventListener('click', playEnvelope);
+        overlay.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            playEnvelope();
+        });
+        
+        // Teclado (accesibilidad)
+        overlay.setAttribute('tabindex', '0');
+        overlay.setAttribute('role', 'button');
+        overlay.setAttribute('aria-label', 'Abrir invitación de boda');
+        
+        overlay.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                playEnvelope();
+            }
         });
     }
     
-    function closeOverlay() {
-        // Añadir clase de revelado espectacular
-        overlay.classList.add('reveal');
-        
-        setTimeout(function() {
-            overlay.classList.add('hidden');
-            document.body.style.overflow = '';
-            sessionStorage.setItem('envelopeOpened', 'true');
-        }, 400);
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEnvelope);
+    } else {
+        initEnvelope();
     }
     
-    // Cuando el video termina, cerrar
-    video.addEventListener('ended', function() {
-        closeOverlay();
-    });
-    
-    // Click en cualquier parte del overlay para reproducir
-    overlay.addEventListener('click', playEnvelope);
-    
-    // Teclado (accesibilidad)
-    overlay.setAttribute('tabindex', '0');
-    overlay.setAttribute('role', 'button');
-    overlay.setAttribute('aria-label', 'Abrir invitación de boda');
-    
-    overlay.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            playEnvelope();
-        }
-    });
+    // También ocultar inmediatamente si ya se abrió (por si acaso)
+    if (envelopeOpened === 'true') {
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('envelopeOverlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+    }
 })();
 
 // Navegación suave
@@ -200,9 +250,16 @@ if (acompanantesInput && acompanantesContainer) {
 const rsvpForm = document.getElementById('rsvpForm');
 const formMessage = document.getElementById('formMessage');
 
+
 if (rsvpForm) {
     rsvpForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Deshabilitar el botón mientras se envía
+        const submitBtn = this.querySelector('.btn-submit');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
         
         // Recopilar datos del formulario
         const formData = new FormData(this);
@@ -221,19 +278,84 @@ if (rsvpForm) {
             }
         }
         
-        // Simular envío (aquí puedes agregar la lógica para enviar a un servidor)
-        console.log('Datos del formulario:', data);
+        // Formatear los datos para el email
+        let emailBody = `NUEVA CONFIRMACIÓN DE ASISTENCIA\n\n`;
+        emailBody += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+        emailBody += `👤 NOMBRE: ${data.nombre || 'No especificado'}\n`;
+        emailBody += `✅ ASISTENCIA: ${data.asistencia === 'si' ? 'Sí, asistiré con mucho gusto' : 'No podré asistir'}\n`;
+        emailBody += `👥 ACOMPAÑANTES: ${data.acompanantes || '0'}\n`;
+        emailBody += `🍽️ RESTRICCIÓN ALIMENTARIA: ${data.restriccion || 'Ninguna'}\n`;
+        emailBody += `🍴 PLATO PRINCIPAL: ${data['plato-principal'] === 'pescado' ? 'Pescado' : data['plato-principal'] === 'carne' ? 'Carne' : 'No especificado'}\n`;
+        emailBody += `🚌 AUTOBÚS: ${data.autobus === 'si' ? 'Sí' : 'No'}\n`;
         
-        // Mostrar mensaje de éxito
-        formMessage.className = 'form-message success';
-        formMessage.textContent = '¡Gracias! Tu confirmación ha sido enviada. Te esperamos en nuestro gran día.';
+        // Información de acompañantes
+        if (data.acompanantes && parseInt(data.acompanantes) > 0) {
+            emailBody += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            emailBody += `ACOMPAÑANTES:\n`;
+            emailBody += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            
+            for (let i = 1; i <= parseInt(data.acompanantes); i++) {
+                const nombreKey = `acompanante-nombre-${i}`;
+                const restriccionKey = `acompanante-restriccion-${i}`;
+                const platoKey = `acompanante-plato-${i}`;
+                const autobusKey = `acompanante-autobus-${i}`;
+                
+                emailBody += `Acompañante ${i}:\n`;
+                emailBody += `  • Nombre: ${data[nombreKey] || 'No especificado'}\n`;
+                emailBody += `  • Restricción: ${data[restriccionKey] || 'Ninguna'}\n`;
+                const plato = data[platoKey];
+                emailBody += `  • Plato: ${plato === 'pescado' ? 'Pescado' : plato === 'carne' ? 'Carne' : 'No especificado'}\n`;
+                emailBody += `  • Autobús: ${data[autobusKey] === 'si' ? 'Sí' : 'No'}\n`;
+                if (i < parseInt(data.acompanantes)) emailBody += `\n`;
+            }
+        }
         
-        // Limpiar formulario
-        this.reset();
-        acompanantesContainer.innerHTML = '';
+        // Mensaje opcional
+        if (data.mensaje && data.mensaje.trim()) {
+            emailBody += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            emailBody += `💌 MENSAJE PARA LOS NOVIOS:\n`;
+            emailBody += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            emailBody += `${data.mensaje}\n`;
+        }
         
-        // Scroll suave al mensaje
-        formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Enviar email usando la API de Vercel
+        fetch('/api/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ formData: data })
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(result) {
+            if (result.success) {
+                // Mostrar mensaje de éxito
+                formMessage.className = 'form-message success';
+                formMessage.textContent = '¡Gracias! Tu confirmación ha sido enviada. Te esperamos en nuestro gran día.';
+                
+                // Limpiar formulario
+                rsvpForm.reset();
+                acompanantesContainer.innerHTML = '';
+                
+                // Scroll suave al mensaje
+                formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                throw new Error(result.error || 'Error desconocido');
+            }
+        })
+        .catch(function(error) {
+            console.error('Error al enviar email:', error);
+            formMessage.className = 'form-message error';
+            formMessage.textContent = 'Hubo un error al enviar tu confirmación. Por favor, inténtalo de nuevo o contáctanos directamente.';
+            formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        })
+        .finally(function() {
+            // Rehabilitar el botón
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        });
     });
 }
 
