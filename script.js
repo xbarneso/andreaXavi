@@ -209,6 +209,14 @@ if (rsvpForm) {
             body: JSON.stringify({ formData: data })
         })
         .then(function(response) {
+            if (!response.ok) {
+                // Si la respuesta no es OK, intentar leer el error
+                return response.json().then(function(err) {
+                    throw new Error(err.error || `Error HTTP: ${response.status}`);
+                }).catch(function() {
+                    throw new Error(`Error HTTP: ${response.status}. La API no está disponible. ¿Estás en local? Necesitas desplegar en Vercel.`);
+                });
+            }
             return response.json();
         })
         .then(function(result) {
@@ -230,7 +238,16 @@ if (rsvpForm) {
         .catch(function(error) {
             console.error('Error al enviar email:', error);
             formMessage.className = 'form-message error';
-            formMessage.textContent = 'Hubo un error al enviar tu confirmación. Por favor, inténtalo de nuevo o contáctanos directamente.';
+            
+            // Mostrar mensaje más específico
+            let errorMessage = 'Hubo un error al enviar tu confirmación. ';
+            if (error.message && error.message.includes('local')) {
+                errorMessage += 'Estás probando en local. Por favor, despliega en Vercel o contacta directamente a xbarnesortega@gmail.com';
+            } else {
+                errorMessage += 'Por favor, inténtalo de nuevo o contáctanos directamente en xbarnesortega@gmail.com';
+            }
+            
+            formMessage.textContent = errorMessage;
             formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         })
         .finally(function() {
