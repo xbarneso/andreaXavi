@@ -366,4 +366,3 @@ if (document.readyState === 'loading') {
 
 // Backup: intentar en el siguiente frame de animación
 window.requestAnimationFrame(startCountdown);
-
