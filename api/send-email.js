@@ -68,7 +68,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         from: 'Boda Andrea & Xavi <onboarding@resend.dev>',
-        to: ['xbarnesortega@gmail.com', 'andreamencer@gmail.com'],
+        to: ['xbarnesortega@gmail.com'],
         subject: `Confirmación de Asistencia - ${formData.nombre || 'Invitado'}`,
         text: emailBody,
       }),
@@ -92,5 +92,6 @@ export default async function handler(req, res) {
     });
   }
 }
+
 
 
