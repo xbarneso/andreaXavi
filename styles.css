@@ -196,6 +196,17 @@ body {
     background-color: var(--white);
 }
 
+.hero-divider {
+    width: 120px;
+    height: 2px;
+    background-color: var(--accent-color);
+    margin: 1.5rem auto;
+    display: block;
+    animation: fadeInUp 1s ease 0.6s both;
+    position: relative;
+    z-index: 3;
+}
+
 .hero-quote {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
@@ -205,7 +216,7 @@ body {
     max-width: 100%;
     width: 100%;
     margin: 3rem auto 0;
-    padding: 0 3rem;
+    padding: 0 3rem 1rem;
     line-height: 1.8;
     animation: fadeInUp 1s ease 0.6s both;
     word-wrap: break-word;
@@ -250,7 +261,7 @@ section {
 /* Sección Información - Timeline */
 .info-section {
     background-color: var(--white);
-    padding: 80px 20px;
+    padding: 40px 20px 80px;
 }
 
 .countdown-container {
@@ -263,10 +274,10 @@ section {
     align-items: center;
     justify-content: center;
     padding: 4rem 3rem;
-    background-color: var(--soft-green);
-    border-radius: 15px;
-    border-left: 5px solid var(--accent-color);
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    background-color: transparent;
+    border-radius: 0;
+    border-left: none;
+    box-shadow: none;
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -472,7 +483,7 @@ section {
 
 .map-container {
     max-width: 900px;
-    margin: 0 auto 3rem;
+    margin: 0 auto 1rem;
     text-align: center;
     border-radius: 15px;
     overflow: hidden;
@@ -640,6 +651,7 @@ section {
 /* Formulario */
 .form-section {
     background-color: var(--white);
+    padding-top: 40px;
 }
 
 .rsvp-form {
@@ -985,6 +997,20 @@ section {
         font-size: 1rem;
     }
 
+    .hero-section {
+        min-height: 120vh;
+    }
+
+    .hero-image-container {
+        height: 120vh;
+    }
+
+    .hero-main-image {
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.1);
+    }
+
     .hero-quote {
         font-size: 1.4rem;
         padding: 0 1.5rem;
@@ -1005,6 +1031,11 @@ section {
         padding: 0 1.5rem;
     }
 
+    .hero-divider {
+        width: 100px;
+        margin: 1.2rem auto;
+    }
+
     .section-title {
         font-size: 2.2rem;
     }
@@ -1016,9 +1047,27 @@ section {
     section {
         padding: 60px 0;
     }
+
+    .info-section {
+        padding-top: 15px;
+    }
 }
 
 @media (max-width: 480px) {
+    .hero-section {
+        min-height: 130vh;
+    }
+
+    .hero-image-container {
+        height: 130vh;
+    }
+
+    .hero-main-image {
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.15);
+    }
+
     .hero-title {
         font-size: 1.5rem;
     }
@@ -1029,7 +1078,7 @@ section {
 
     .hero-quote {
         font-size: 1.2rem;
-        padding: 0 1rem;
+        padding: 0 1rem 0.5rem;
         margin: 1.5rem auto 0;
         line-height: 1.6;
     }
@@ -1048,6 +1097,11 @@ section {
         padding: 0 1rem;
     }
 
+    .hero-divider {
+        width: 80px;
+        margin: 1rem auto;
+    }
+
     .section-title {
         font-size: 1.8rem;
     }
@@ -1055,6 +1109,10 @@ section {
     .info-grid,
     .contact-grid {
         grid-template-columns: 1fr;
+    }
+
+    .info-section {
+        padding-top: 10px;
     }
 }
 
