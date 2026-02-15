@@ -17,88 +17,6 @@
     box-sizing: border-box;
 }
 
-/* ========================================
-   SOBRE DE INVITACIÓN - VIDEO
-   ======================================== */
-
-.envelope-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: opacity 1s ease, visibility 1s ease;
-}
-
-.envelope-overlay.reveal {
-    animation: envelope-reveal 0.4s ease-in forwards;
-}
-
-@keyframes envelope-reveal {
-    0% {
-        clip-path: circle(150% at 50% 50%);
-        opacity: 1;
-    }
-    100% {
-        clip-path: circle(0% at 50% 50%);
-        opacity: 0;
-    }
-}
-
-.envelope-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-
-.envelope-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* Texto "Toca para abrir" */
-.envelope-tap-hint {
-    position: absolute;
-    bottom: 8%;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: hint-fade 2.5s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.envelope-tap-hint span {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: #000;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-    padding: 14px 36px;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 30px;
-    backdrop-filter: blur(6px);
-    background: rgba(255, 255, 255, 0.15);
-}
-
-@keyframes hint-fade {
-    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
-    50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
-}
-
-.envelope-tap-hint.hide {
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
 body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-dark);
@@ -194,7 +112,7 @@ body {
 .hero-section {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
 }
 
@@ -224,7 +142,7 @@ body {
 
 .hero-title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
     margin-bottom: 1rem;
     letter-spacing: 3px;
@@ -248,11 +166,34 @@ body {
 
 .hero-date-main {
     font-family: 'Playfair Display', serif;
-    font-size: 1.75rem;
+    font-size: 2.5rem;
     font-weight: 600;
     letter-spacing: 10px;
-    margin-top: 1.5rem;
+    margin: 3rem auto 0.5rem;
+    text-align: center;
+    color: var(--dark-green);
+    padding: 0 2rem;
+    display: block;
     animation: fadeInUp 1s ease 0.5s both;
+    position: relative;
+    z-index: 3;
+    background-color: var(--white);
+}
+
+.hero-time {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin: 0 auto 1.5rem;
+    text-align: center;
+    color: var(--dark-green);
+    padding: 0 2rem;
+    display: block;
+    animation: fadeInUp 1s ease 0.55s both;
+    position: relative;
+    z-index: 3;
+    background-color: var(--white);
 }
 
 .hero-quote {
@@ -268,6 +209,9 @@ body {
     line-height: 1.8;
     animation: fadeInUp 1s ease 0.6s both;
     word-wrap: break-word;
+    position: relative;
+    z-index: 3;
+    background-color: var(--white);
 }
 
 @keyframes fadeInUp {
@@ -318,16 +262,24 @@ section {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 4rem 3rem;
+    background-color: var(--soft-green);
+    border-radius: 15px;
+    border-left: 5px solid var(--accent-color);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .countdown-title {
     font-family: 'Playfair Display', serif;
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--dark-green);
-    margin-bottom: 2.5rem;
-    font-weight: 400;
-    letter-spacing: 5px;
-    font-style: italic;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-align: center;
 }
 
 .countdown {
@@ -335,7 +287,10 @@ section {
     justify-content: center;
     align-items: center;
     gap: 1.5rem;
-    padding: 2rem 0;
+    padding: 1rem 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
 .countdown-item {
@@ -355,7 +310,7 @@ section {
 
 .countdown-separator {
     font-family: 'Playfair Display', serif;
-    font-size: 10rem;
+    font-size: 6.5rem;
     font-weight: 300;
     color: var(--accent-color);
     line-height: 1;
@@ -365,12 +320,13 @@ section {
 
 .countdown-number {
     font-family: 'Playfair Display', serif;
-    font-size: 12rem;
+    font-size: 8rem;
     font-weight: 700;
     color: var(--dark-green);
     line-height: 1;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
     text-align: center;
+    word-break: break-word;
 }
 
 
@@ -391,37 +347,22 @@ section {
 /* Responsive para cuenta atrás */
 @media (max-width: 1600px) {
     .countdown-number {
-        font-size: 14rem;
+        font-size: 7rem;
     }
     
     .countdown-separator {
-        font-size: 11rem;
+        font-size: 5.5rem;
     }
     
     .countdown {
         gap: 1rem;
-        padding: 4rem 4rem;
+        padding: 1rem 0;
     }
 }
 
 @media (max-width: 1200px) {
     .countdown-number {
-        font-size: 10rem;
-    }
-    
-    .countdown-separator {
-        font-size: 8rem;
-    }
-    
-    .countdown {
-        gap: 0.8rem;
-        padding: 3rem 3rem;
-    }
-}
-
-@media (max-width: 992px) {
-    .countdown-number {
-        font-size: 7rem;
+        font-size: 6.5rem;
     }
     
     .countdown-separator {
@@ -429,27 +370,47 @@ section {
     }
     
     .countdown {
+        gap: 0.8rem;
+        padding: 1rem 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .countdown-number {
+        font-size: 5.5rem;
+    }
+    
+    .countdown-separator {
+        font-size: 4rem;
+    }
+    
+    .countdown {
         gap: 0.5rem;
-        padding: 2.5rem 2rem;
+        padding: 1rem 0;
     }
     
     .countdown-title {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
     }
 }
 
 @media (max-width: 768px) {
+    .countdown-container {
+        padding: 2rem 1.5rem;
+    }
+    
     .countdown-number {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
     
     .countdown-separator {
-        font-size: 3rem;
+        font-size: 2.5rem;
     }
     
     .countdown {
         gap: 0.3rem;
-        padding: 2rem 1rem;
+        padding: 1rem 0;
     }
     
     .countdown-title {
@@ -458,17 +419,21 @@ section {
 }
 
 @media (max-width: 480px) {
+    .countdown-container {
+        padding: 1.5rem 1rem;
+    }
+    
     .countdown-number {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
     
     .countdown-separator {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     
     .countdown {
         gap: 0.2rem;
-        padding: 1.5rem 0.5rem;
+        padding: 1rem 0;
     }
     
     .countdown-title {
@@ -521,24 +486,6 @@ section {
     display: block;
 }
 
-.timeline-container {
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-    background-color: transparent;
-    padding: 0;
-    position: relative;
-}
-
-.timeline-image {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    border-radius: 15px;
-    display: block;
-    background-color: var(--white);
-    image-rendering: auto;
-}
 
 .timeline {
     position: relative;
@@ -658,10 +605,6 @@ section {
 
 /* Responsive para timeline */
 @media (max-width: 768px) {
-    .timeline-container {
-        padding: 2rem 1rem;
-        border-width: 4px;
-    }
 
     .timeline::before {
         left: 30px;
@@ -1031,7 +974,7 @@ section {
     }
 
     .hero-title {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     .hero-subtitle {
@@ -1040,6 +983,26 @@ section {
 
     .hero-date {
         font-size: 1rem;
+    }
+
+    .hero-quote {
+        font-size: 1.4rem;
+        padding: 0 1.5rem;
+        margin: 2rem auto 0;
+    }
+
+    .hero-date-main {
+        font-size: 2rem;
+        letter-spacing: 6px;
+        margin: 2rem auto 0.5rem;
+        padding: 0 1.5rem;
+    }
+
+    .hero-time {
+        font-size: 1.3rem;
+        letter-spacing: 2px;
+        margin: 0 auto 1rem;
+        padding: 0 1.5rem;
     }
 
     .section-title {
@@ -1057,11 +1020,32 @@ section {
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
     }
 
     .hero-subtitle {
         font-size: 1.1rem;
+    }
+
+    .hero-quote {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+        margin: 1.5rem auto 0;
+        line-height: 1.6;
+    }
+
+    .hero-date-main {
+        font-size: 1.6rem;
+        letter-spacing: 4px;
+        margin: 1.5rem auto 0.5rem;
+        padding: 0 1rem;
+    }
+
+    .hero-time {
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        margin: 0 auto 1rem;
+        padding: 0 1rem;
     }
 
     .section-title {
