@@ -10,22 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Sobre de Invitación (Video) -->
-    <div class="envelope-overlay" id="envelopeOverlay">
-        <video 
-            class="envelope-video" 
-            id="envelopeVideo" 
-            preload="auto" 
-            muted 
-            playsinline 
-            webkit-playsinline>
-            <source src="Descargas/sobre.mp4" type="video/mp4">
-        </video>
-        <div class="envelope-tap-hint" id="envelopeTapHint">
-            <span>Toca para abrir</span>
-        </div>
-    </div>
-
     <!-- Navegación -->
     <nav class="navbar">
         <div class="nav-container">
@@ -51,9 +35,10 @@
             <div class="hero-content">
                 <h1 class="hero-title">Andrea y Xavi</h1>
                 <p class="hero-subtitle">¡Nos casamos!</p>
-                <p class="hero-date-main">01 / 08 / 2026</p>
             </div>
         </div>
+        <p class="hero-date-main">01 / 08 / 2026</p>
+        <p class="hero-time">A las 18:00h</p>
         <p class="hero-quote">Lo mejor de la felicidad es cuando la compartes con las personas que hacen que la vida merezca la pena</p>
     </section>
 
@@ -61,6 +46,7 @@
     <section id="informacion" class="info-section">
         <div class="container">
             <div class="countdown-container">
+                <h2 class="countdown-title">Cuenta atrás...</h2>
                 <div id="countdown" class="countdown">
                     <div class="countdown-item">
                         <span class="countdown-number" id="days">000</span>
@@ -99,9 +85,6 @@
                     class="google-map">
                 </iframe>
             </div>
-            <div class="timeline-container">
-                <img src="Descargas/infoboda.jpg?v=2" alt="Timeline de la boda" class="timeline-image">
-            </div>
         </div>
     </section>
 
@@ -109,7 +92,7 @@
     <section id="formulario" class="form-section">
         <div class="container">
             <h2 class="section-title">Confirmación de Asistencia</h2>
-            <p class="section-subtitle">Por favor, confirma tu asistencia antes del 29 de marzo de 2026.</p>
+            <p class="section-subtitle">Por favor, confirma tu asistencia antes del 26 de abril de 2026.</p>
             <form class="rsvp-form" id="rsvpForm">
                 <div class="form-group">
                     <label for="nombre">Nombre Completo *</label>
@@ -119,7 +102,7 @@
                     <label for="asistencia">¿Asistirás? *</label>
                     <select id="asistencia" name="asistencia" required>
                         <option value="">Selecciona una opción</option>
-                        <option value="si">Sí, asistiré con mucho gusto</option>
+                        <option value="si">Sí, no me lo perdería</option>
                         <option value="no">No podré asistir</option>
                     </select>
                 </div>
@@ -141,7 +124,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>¿Necesitarás autobús? *</label>
+                    <label>¿Necesitarás autobús? * (Ida a las 17h, vuelta a las 3h - Collblanc, L'Hospitalet)</label>
                     <div class="radio-group">
                         <label class="radio-label">
                             <input type="radio" name="autobus" value="si" required>
@@ -158,7 +141,7 @@
                 <div id="acompanantesContainer"></div>
                 
                 <div class="form-group">
-                    <label for="mensaje">Déjanos un mensaje para los novios (opcional)</label>
+                    <label for="mensaje">Deja un mensaje para los novios (opcional)</label>
                     <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe un mensaje especial..."></textarea>
                 </div>
                 <button type="submit" class="btn-submit">Enviar Confirmación</button>
