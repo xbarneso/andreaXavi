@@ -37,16 +37,11 @@
     function closeOverlay() {
         // Añadir clase de revelado espectacular
         overlay.classList.add('reveal');
-        document.body.classList.add('entering');
         
         setTimeout(function() {
             overlay.classList.add('hidden');
             document.body.style.overflow = '';
             sessionStorage.setItem('envelopeOpened', 'true');
-            
-            setTimeout(function() {
-                document.body.classList.remove('entering');
-            }, 600);
         }, 400);
     }
     
